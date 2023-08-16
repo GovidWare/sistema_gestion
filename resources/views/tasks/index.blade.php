@@ -135,7 +135,7 @@
                                                     <form method="POST" action="{{ route('tasks.destroy', $task->id) }}" class="d-inline">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="dropdown-item btn btn-destroy">
+                                                        <button type="button" class="dropdown-item btn btn-destroy">
                                                             <i class="fa-solid fa-trash-can mr-4 text-danger"></i>
                                                             Eliminar
                                                         </button>
@@ -165,17 +165,17 @@
 @section('scripts')
 <script>
     $('.btn-destroy').on('click', function() {
-        // Swal.fire({
-        //     title: '¿Eliminar registro?',
-        //     icon: 'question',
-        //     showCancelButton: true,
-        //     confirmButtonText: 'Confirmar',
-        //     cancelButtonText: 'Cancelar',
-        // }).then((result) => {
-        //     if (result.isConfirmed) {
-        //         $(this).parent().trigger( "submit" )
-        //     }
-        // })
+        Swal.fire({
+            title: '¿Eliminar registro?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Confirmar',
+            cancelButtonText: 'Cancelar',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $(this).parent().trigger( "submit" )
+            }
+        })
     })
 </script>
 @endsection

@@ -26,7 +26,7 @@
                 <label for="start_date">
                     Fecha de inicio <span class="text-danger">*</span>
                 </label>
-                <input type="date" name="start_date" id="start_date" class="form-control" placeholder="Fecha de inicio" value="{{ $data->start_date??'' }}">
+                <input type="date" name="start_date" id="start_date" class="form-control" placeholder="Fecha de inicio" value="{{ $data->start_date??'' }}" required>
             </div>
         </div>
         <div class="col-12 col-md-6">
@@ -34,7 +34,7 @@
                 <label for="end_date">
                     Fecha de finalización <span class="text-danger">*</span>
                 </label>
-                <input type="date" name="end_date" id="end_date" class="form-control" placeholder="Fecha de finalización" value="{{ $data->end_date??'' }}">
+                <input type="date" name="end_date" id="end_date" class="form-control" placeholder="Fecha de finalización" value="{{ $data->end_date??'' }}" required>
             </div>
         </div>
     </div>
@@ -45,7 +45,7 @@
                 <label for="description">
                     Descripción <small class="text-secondary">(Opcional)</small>
                 </label>
-                <textarea name="description" id="description" rows="3"
+                <textarea name="description" id="description" rows="3" maxlength="200"
                     class="form-control"
                     placeholder="Descripción"
                 >{{ $data->description??'' }}</textarea>

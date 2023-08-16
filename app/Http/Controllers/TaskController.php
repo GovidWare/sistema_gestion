@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Alert;
+
 
 class TaskController extends Controller
 {
@@ -54,10 +56,10 @@ class TaskController extends Controller
         $task->fill($request->all());
 
         if ($task->save()) {
-            // Alert::success(__('Tareas'), __('Se ha registrado la información'))->persistent('Close');
+            Alert::success(__('Tareas'), __('Se ha registrado la información'))->persistent('Close');
             return redirect()->route('tasks.index');
         }else{
-            // Alert::warning(__('Tareas'), __('Ha surgido un error, por favor intente nuevamente'))->persistent('Close');
+            Alert::warning(__('Tareas'), __('Ha surgido un error, por favor intente nuevamente'))->persistent('Close');
             return redirect()->back();
         }
     }
@@ -105,10 +107,10 @@ class TaskController extends Controller
         $task->fill($request->all());
 
         if ($task->save()) {
-            // Alert::success(__('Tareas'), __('Se ha registrado la información'))->persistent('Close');
+            Alert::success(__('Tareas'), __('Se ha registrado la información'))->persistent('Close');
             return redirect()->route('tasks.index');
         }else{
-            // Alert::warning(__('Tareas'), __('Ha surgido un error, por favor intente nuevamente'))->persistent('Close');
+            Alert::warning(__('Tareas'), __('Ha surgido un error, por favor intente nuevamente'))->persistent('Close');
             return redirect()->back();
         }
     }
@@ -122,10 +124,10 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         if ($task->delete()) {
-            // Alert::success(__('Empleado'), __('Se ha eliminado el registro'))->persistent('Close');
+            Alert::success(__('Tareas'), __('Se ha eliminado el registro'))->persistent('Close');
             return redirect()->route('tasks.index');
         }else{
-            // Alert::warning(__('Empleado'), __('Ha surgido un error, por favor intente nuevamente'))->persistent('Close');
+            Alert::warning(__('Tareas'), __('Ha surgido un error, por favor intente nuevamente'))->persistent('Close');
             return redirect()->back();
         }
     }
