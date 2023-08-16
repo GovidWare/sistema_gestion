@@ -58,7 +58,9 @@
         <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm border">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    {{-- {{ config('app.name', 'Laravel') }} --}}
+                    <img src="{{ asset('img/big.png') }}" alt="Logo" style="width: 30px">
+                    <small>BIG</small>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -68,6 +70,9 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
+
+                    @if(Auth::check())
+
                     <ul class="navbar-nav mr-auto">
                         {{-- <li class="nav-item active">
                             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
@@ -92,6 +97,7 @@
                             <a class="nav-link disabled" href="#">Disabled</a>
                         </li> --}}
                     </ul>
+                    @endif
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
