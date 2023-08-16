@@ -23,7 +23,19 @@ class TaskController extends Controller
         ->orderBy('id','DESC')
         ->paginate(15);
 
-        return view('tasks.index', compact('tasks'));
+        $tasks_pr = Task::where('user_id', Auth::id())
+        ->where('status','PR')
+        ->orderBy('id','DESC')
+        ->paginate(15);
+
+        return view('tasks.index', compact('tasks','tasks_pr'));
+    }
+
+    public function allTasks()
+    {
+        $tasks = Task::paginate(15);
+
+        return view('tasks.all', compact('tasks'));
     }
 
     /**
@@ -48,12 +60,22 @@ class TaskController extends Controller
             'title'       => 'required|max:50',
             'description' => 'nullable|max:200',
             'start_date'  => 'required|date',
-            'end_date'    => 'required|date',
+            'end_date'    => 'required|date|after_or_equal:start_date',
+            'file'        => 'nullable|mimes:pdf,xlsx,docx,txt,pptx|max:2048',
+        ], [
+            'end_date.after_or_equal' => 'La fecha final debe ser mayor o igual que la fecha inicial.',
         ]);
 
         $task = new Task();
         $task->user_id = Auth::id();
+
         $task->fill($request->all());
+
+        if($request->hasFile('file')){
+            $file = time() . '_' . $request->file->getClientOriginalName();
+            $request->file('file')->storeAs('uploads', $file);
+            $task->file = $file;
+        }
 
         if ($task->save()) {
             Alert::success(__('Tareas'), __('Se ha registrado la información'))->persistent('Close');
@@ -101,10 +123,19 @@ class TaskController extends Controller
             'title'       => 'required|max:50',
             'description' => 'nullable|max:200',
             'start_date'  => 'required|date',
-            'end_date'    => 'required|date',
+            'end_date'    => 'required|date|after_or_equal:start_date',
+            'file'        => 'nullable|mimes:pdf,xlsx,docx,txt,pptx|max:2048',
+        ], [
+            'end_date.after_or_equal' => 'La fecha final debe ser mayor o igual que la fecha inicial.',
         ]);
 
         $task->fill($request->all());
+
+        if($request->hasFile('file')){
+            $file = time() . '_' . $request->file->getClientOriginalName();
+            $request->file('file')->storeAs('uploads', $file);
+            $task->file = $file;
+        }
 
         if ($task->save()) {
             Alert::success(__('Tareas'), __('Se ha registrado la información'))->persistent('Close');
@@ -130,5 +161,33 @@ class TaskController extends Controller
             Alert::warning(__('Tareas'), __('Ha surgido un error, por favor intente nuevamente'))->persistent('Close');
             return redirect()->back();
         }
+    }
+
+    public function download(Task $task)
+    {
+        $filePath = storage_path('app/uploads/' . $task->file);
+
+        if (file_exists($filePath)) {
+            return response()->download($filePath, $task->file);
+        } else {
+            Alert::warning(__('Tareas'), __('Ha surgido un error, por favor intente nuevamente'))->persistent('Close');
+            return redirect()->back();
+        }
+    }
+    public function completed(Task $task)
+    {
+        $task->status = 'CO';
+        if ($task->save()) {
+            Alert::success(__('Tareas'), __('Se ha registrado la información'))->persistent('Close');
+            return redirect()->route('tasks.index');
+        }else{
+            Alert::warning(__('Tareas'), __('Ha surgido un error, por favor intente nuevamente'))->persistent('Close');
+            return redirect()->back();
+        }
+    }
+
+
+    public function downloadReport(){
+        return 1;
     }
 }

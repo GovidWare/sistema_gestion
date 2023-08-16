@@ -21,6 +21,7 @@ class CreateTasksTable extends Migration
             $table->enum('status', ['HA', 'PR', 'CO'])->comment('Estado => HA: Por hacer, PR: En progreso, CO: Completada')->default('HA');
             $table->date('start_date')->nullable()->comment('Fecha inicial');
             $table->date('end_date')->nullable()->comment('Fecha final');
+            $table->text('file')->nullable()->comment('Archivo');
             $table->timestamps();
             $table->softDeletes();
 

@@ -44,6 +44,12 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Styles -->
     {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
+
+    <style>
+        .custom-file-label::after {
+            content: "Cargar";
+        }
+    </style>
 </head>
 
 <body>
@@ -75,9 +81,11 @@
                                 Tareas
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route("tasks.index") }}">Listar</a>
+                                <a class="dropdown-item" href="{{ route("tasks.index") }}">Mis tareas</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Crear</a>
+                                <a class="dropdown-item" href="{{ route("tasks.create") }}">Crear</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{ route('all.tasks') }}">Todas las tareas</a>
                             </div>
                         </li>
                         {{-- <li class="nav-item">

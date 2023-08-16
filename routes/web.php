@@ -27,5 +27,11 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::middleware('auth')->group(function () {
     Route::resources(['tasks'=> TaskController::class]);
+
+    Route::get('/all/tasks', [TaskController::class,'allTasks'])->name('all.tasks');
+    Route::get('file/download/{task}', [TaskController::class,'download'])->name('file.download');
+
+    Route::get('tasks/completed/{task}', [TaskController::class,'completed'])->name('tasks.completed');
+    Route::get('download/report', [TaskController::class,'downloadReport'])->name('download.report');
 });
 

@@ -8,7 +8,7 @@
 @endif
     @csrf
     <div class="row">
-        <div class="col-12 col-md-12">
+        <div class="col-12 col-md-6">
             <div class="form-group">
                 <div class="form-group">
                     <label for="title">
@@ -16,6 +16,19 @@
                     </label>
                     <input type="text" name="title" id="title" class="form-control" placeholder="Título" value="{{ $data->title??'' }}" maxlength="50" required>
                 </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="form-group">
+                <label for="status">Estado <span class="text-danger">*</span></label>
+                <select name="status" id="status" class="form-control" required>
+                    <option value="">Seleccione...</option>
+                    @foreach ( Config::get('options.tasks_status') as $key => $value)
+                        <option value="{{ $key }}" {{ (isset($data->status) && $data->status == $key)? 'selected':'' }}>
+                            {{ $value }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
         </div>
     </div>
@@ -42,6 +55,27 @@
     <div class="row">
         <div class="col-12">
             <div class="form-group">
+                <label for="file">
+                    Archivo <small class="text-secondary">(Opcional)</small>
+                </label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="file" name="file" onchange="updateFileName()">
+                    <label class="custom-file-label" for="file" id="fileLabel">
+                        {{ $data->file?? 'Seleccione un archivo'}}
+                    </label>
+                </div>
+            </div>
+            @if(isset($data->file))
+                <a href="{{ route('file.download',$data->id) }}" class="btn btn-sm btn-primary mb-2">
+                    <i class="fa-solid fa-download mr-2"></i>
+                    Descargar
+                </a>
+            @endif
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
                 <label for="description">
                     Descripción <small class="text-secondary">(Opcional)</small>
                 </label>
@@ -58,3 +92,19 @@
         Guardar
     </button>
 </form>
+
+@section('scripts')
+<script>
+    function updateFileName() {
+        const fileInput = document.getElementById('file');
+        const fileLabel = document.getElementById('fileLabel');
+
+        if (fileInput.files.length > 0) {
+            fileLabel.textContent = fileInput.files[0].name;
+        } else {
+            fileLabel.textContent = 'Seleccione un archivo';
+        }
+    }
+    </script>
+
+@endsection
