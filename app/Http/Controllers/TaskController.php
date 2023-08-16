@@ -6,7 +6,8 @@ use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Alert;
-
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\TasksExport;
 
 class TaskController extends Controller
 {
@@ -188,6 +189,6 @@ class TaskController extends Controller
 
 
     public function downloadReport(){
-        return 1;
+        return Excel::download(new TasksExport, 'reporte_tareas.xlsx');
     }
 }

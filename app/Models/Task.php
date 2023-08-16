@@ -53,4 +53,9 @@ class Task extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function scopeAddUser($query)
+    {
+        return $query->join('users', 'users.id', 'tasks.user_id');
+    }
+
 }
