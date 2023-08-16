@@ -10,6 +10,7 @@
                         Tareas
                         <span class="badge bg-primary text-white">{{ $tasks->total() }}</span>
                     </h4>
+                    <span>(Por hacer y completadas)</span>
 
                     <div>
 
@@ -40,6 +41,10 @@
                                 <th class="text-center">
                                     <i class="fa-solid fa-calendar-days mr-1"></i>
                                     Fecha fin
+                                </th>
+                                <th class="text-center">
+                                    <i class="fa-solid fa-calendar-days mr-1"></i>
+                                    Tiempo
                                 </th>
                                 <th class="text-center">
                                     <i class="fas fa-exclamation-circle mr-1"></i>
@@ -79,6 +84,15 @@
                                     </td>
                                     <td class="text-center">{{ $task->start_date }}</td>
                                     <td class="text-center">{{ $task->end_date }}</td>
+                                    <td class="text-center">
+                                        @if ( $task->status == 'HA')
+                                            <span class="text-small">
+                                                Empieza: {{ $task->time_remaining }}
+                                            </span>
+                                        @else
+                                            Termino: {{ $task->time_completion }}
+                                        @endif
+                                    </td>
                                     <td class="text-center">
                                         @switch($task->status)
                                             @case('HA')

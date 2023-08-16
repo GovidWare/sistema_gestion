@@ -15,7 +15,12 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::where('user_id', Auth::id())->orderBy('id','DESC')->paginate(10);
+        $tasks = Task::where('user_id', Auth::id())
+        ->where('status','<>','PR')
+        ->orderBy('status')
+        ->orderBy('id','DESC')
+        ->paginate(15);
+
         return view('tasks.index', compact('tasks'));
     }
 
