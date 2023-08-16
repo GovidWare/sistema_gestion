@@ -189,6 +189,6 @@ class TaskController extends Controller
 
 
     public function downloadReport(){
-        return Excel::download(new TasksExport, 'reporte_tareas.xlsx');
+        return Excel::download(new TasksExport, 'Reporte_Tareas.xlsx');
     }
 }
